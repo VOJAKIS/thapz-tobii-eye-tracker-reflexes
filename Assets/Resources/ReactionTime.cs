@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-
+[Serializable]
 public class ReactionTime {
-	private List<float> reactionTimes = new List<float>();
+	public List<float> reactionTimes = new List<float>();
 
 	public int getCount() {
 		return reactionTimes.Count();

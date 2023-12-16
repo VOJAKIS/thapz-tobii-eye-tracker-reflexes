@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Tobii.Gaming;
+using UnityEngine.SceneManagement;
 
 public class Reflexes : MonoBehaviour
 {
-	public static bool eyeTrackerOrElseMouse = true;
+	public bool eyeTrackerOrElseMouse = true;
 
 	// Point to show and or hide
 	public GameObject point;
@@ -23,18 +24,12 @@ public class Reflexes : MonoBehaviour
 	// Reaction time class to OOP this b
 	public static ReactionTime reactionTime;
 	private float showTimeInSeconds = 0;
-	public static int MAXIMUM_NUMBER_OF_REACTION_TIMES = 2;
-
-	// End "scene" shenanigans
-	public GameObject endObject;
-	public TMP_Text endReactionsText;
+	public int MAXIMUM_NUMBER_OF_REACTION_TIMES = 2;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		endObject.SetActive(false);
 		reactionTime = new ReactionTime();
-		// Hides the point at initialisation
 		hidePoint();
 	}
 
@@ -55,7 +50,8 @@ public class Reflexes : MonoBehaviour
 
 		if (reactionTime.getCount() >= MAXIMUM_NUMBER_OF_REACTION_TIMES)
 		{
-			loadEndScene();
+			DataSaver.saveData<ReactionTime>(reactionTime, "reactionTime");
+			SceneManager.LoadScene("End");
 			return;
 		}
 
@@ -150,19 +146,5 @@ public class Reflexes : MonoBehaviour
 	private void hidePoint()
 	{
 		point.SetActive(false);
-	}
-
-	private void loadEndScene()
-	{
-		gameObject.SetActive(false);
-		endObject.SetActive(true);
-
-		string reactionTimes = "REACTION TIMES";
-		string numberOfPoints = "number of points: " + reactionTime.getCount().ToString("F0");
-		string slowestReactionTime = "slowest: " + reactionTime.getMaximum().ToString("F0") + "ms";
-		string averageReactionTime = "average: " + reactionTime.getAverage().ToString("F0") + "ms";
-		string fastestReactionTime = "fastest: " + reactionTime.getMinimum().ToString("F0") + "ms";
-
-		endReactionsText.text = reactionTimes + "\n\n" + numberOfPoints + "\n" + slowestReactionTime + "\n" + averageReactionTime + "\n" + fastestReactionTime;
 	}
 }
