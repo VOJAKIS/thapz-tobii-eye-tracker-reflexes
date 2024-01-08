@@ -496,7 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c353d39c745b2f6418513c66030800fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eyeTrackerOrElseMouse: 0
+  eyeTrackerOrElseMouse: 1
   point: {fileID: 308408732}
   reactionTimeText: {fileID: 1268599193}
   MAXIMUM_NUMBER_OF_REACTION_TIMES: 3
